@@ -1,0 +1,47 @@
+0000191d <Area15>:
+    191d:	f3 0f 1e fb          	endbr32
+    1921:	56                   	push   %esi
+    1922:	53                   	push   %ebx
+    1923:	83 ec 20             	sub    $0x20,%esp
+    1926:	e8 c5 fa ff ff       	call   13f0 <__x86.get_pc_thunk.bx>
+    192b:	81 c3 35 56 00 00    	add    $0x5635,%ebx
+    1931:	8b 74 24 2c          	mov    0x2c(%esp),%esi              // esi = esp+44
+    1935:	65 a1 14 00 00 00    	mov    %gs:0x14,%eax
+    193b:	89 44 24 18          	mov    %eax,0x18(%esp)              // esp + 18 = eax
+    193f:	31 c0                	xor    %eax,%eax
+    1941:	56                   	push   %esi
+    1942:	e8 7d 04 00 00       	call   1dc4 <string_length>
+    1947:	83 c4 10             	add    $0x10,%esp
+    194a:	83 f8 06             	cmp    $0x6,%eax                    // str len 6
+    194d:	75 55                	jne    19a4 <Area15+0x87>           // jump to (bomb)
+    194f:	b8 00 00 00 00       	mov    $0x0,%eax                    // eax = 0
+    1954:	8d 8b c0 d8 ff ff    	lea    -0x2740(%ebx),%ecx
+    195a:	0f b6 14 06          	movzbl (%esi,%eax,1),%edx           // edx = esi + eax [ZBL]
+    195e:	83 e2 0f             	and    $0xf,%edx                    // edx = edx & 0xf
+    1961:	0f b6 14 11          	movzbl (%ecx,%edx,1),%edx           // edx = *(edx + ecx) [ZBL]
+    1965:	88 54 04 05          	mov    %dl,0x5(%esp,%eax,1)         // esp+eax+5 = dl
+    1969:	83 c0 01             	add    $0x1,%eax                    // eax = eax + 1
+    196c:	83 f8 06             	cmp    $0x6,%eax
+    196f:	75 e9                	jne    195a <Area15+0x3d>           // if eax != 6 go to 195a
+    1971:	c6 44 24 0b 00       	movb   $0x0,0xb(%esp)               // esp+11 = 0
+    1976:	83 ec 08             	sub    $0x8,%esp                    // POP ESP 8
+    1979:	8d 83 99 d8 ff ff    	lea    -0x2767(%ebx),%eax           
+    197f:	50                   	push   %eax                         // push ebx-2767
+    1980:	8d 44 24 11          	lea    0x11(%esp),%eax
+    1984:	50                   	push   %eax                         // push esp + 11
+    1985:	e8 5c 04 00 00       	call   1de6 <strings_not_equal>     // strings not equal()
+    198a:	83 c4 10             	add    $0x10,%esp
+    198d:	85 c0                	test   %eax,%eax
+    198f:	75 1a                	jne    19ab <Area15+0x8e>           // if eax != 0(go to bomb)
+    1991:	8b 44 24 0c          	mov    0xc(%esp),%eax               // eax = esp + 12
+    1995:	65 33 05 14 00 00 00 	xor    %gs:0x14,%eax
+    199c:	75 14                	jne    19b2 <Area15+0x95>
+    199e:	83 c4 14             	add    $0x14,%esp
+    19a1:	5b                   	pop    %ebx
+    19a2:	5e                   	pop    %esi
+    19a3:	c3                   	ret
+    19a4:	e8 f4 06 00 00       	call   209d <illegal_move>
+    19a9:	eb a4                	jmp    194f <Area15+0x32>
+    19ab:	e8 ed 06 00 00       	call   209d <illegal_move>
+    19b0:	eb df                	jmp    1991 <Area15+0x74>
+    19b2:	e8 a9 16 00 00       	call   3060 <__stack_chk_fail_local>

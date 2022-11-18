@@ -1,0 +1,89 @@
+00001758 <Holoh3ro>:
+    1758:	f3 0f 1e fb          	endbr32
+    175c:	56                   	push   %esi
+    175d:	53                   	push   %ebx
+    175e:	83 ec 14             	sub    $0x14,%esp
+    1761:	e8 8a fc ff ff       	call   13f0 <__x86.get_pc_thunk.bx>
+    1766:	81 c3 fa 57 00 00    	add    $0x57fa,%ebx
+    176c:	65 a1 14 00 00 00    	mov    %gs:0x14,%eax
+    1772:	89 44 24 0c          	mov    %eax,0xc(%esp)                   // esp+12 = eax
+    1776:	31 c0                	xor    %eax,%eax                        // eax = 0
+    1778:	8d 44 24 08          	lea    0x8(%esp),%eax
+    177c:	50                   	push   %eax                             // push (esp)+8
+    177d:	8d 44 24 08          	lea    0x8(%esp),%eax
+    1781:	50                   	push   %eax                             // push (esp)+8
+    1782:	8d 83 53 db ff ff    	lea    -0x24ad(%ebx),%eax
+    1788:	50                   	push   %eax                             // push (ebx)-24ad
+    1789:	ff 74 24 2c          	push   0x2c(%esp)                       // push (esp)-44
+    178d:	e8 4e fb ff ff       	call   12e0 <__isoc99_sscanf@plt> 
+    1792:	83 c4 10             	add    $0x10,%esp                       // POP esp 16
+    1795:	83 f8 01             	cmp    $0x1,%eax
+    1798:	7e 1b                	jle    17b5 <Holoh3ro+0x5d>             // if eax <= 1 go to 17b5
+    179a:	83 7c 24 04 07       	cmpl   $0x7,0x4(%esp)
+    179f:	0f 87 81 00 00 00    	ja     1826 <.L30>                      // if (esp)+4 > 7 [UNSIGNED] go to 1826 (ERROR)
+    17a5:	8b 44 24 04          	mov    0x4(%esp),%eax                   // eax = esp + 4
+    17a9:	89 da                	mov    %ebx,%edx                        // edx = ebx
+    17ab:	03 94 83 a0 d8 ff ff 	add    -0x2760(%ebx,%eax,4),%edx        // edx = ebx + 4*eax 9 0x2760
+    17b2:	3e ff e2             	notrack jmp *%edx
+    17b5:	e8 e3 08 00 00       	call   209d <illegal_move>
+    17ba:	eb de                	jmp    179a <Holoh3ro+0x42>
+
+000017bc <.L26>:
+    17bc:   b8 8c 03 00 00          mov    $0x38c,%eax
+    17c1:   eb 05                   jmp    17c8 <.L31+0x5>
+
+000017c3 <.L31>:
+    17c3:   b8 00 00 00 00          mov    $0x0,%eax
+    17c8:   8d b0 74 fc ff ff       lea    -0x38c(%eax),%esi
+    17ce:   eb 30                   jmp    1800 <.L33+0x15>
+
+000017d0 <.L24>:
+    17d0:   b8 d6 01 00 00          mov    $0x1d6,%eax
+    17d5:   eb 05                   jmp    17dc <.L32+0x5>
+
+000017d7 <.L32>:
+    17d7:   b8 00 00 00 00          mov    $0x0,%eax
+    17dc:   8d b0 2e fc ff ff       lea    -0x3d2(%eax),%esi
+    17e2:   eb 1c                   jmp    1800 <.L33+0x15>
+
+000017e4 <.L22>:
+    17e4:   b8 74 fc ff ff          mov    $0xfffffc74,%eax
+    17e9:   eb 05                   jmp    17f0 <.L33+0x5>
+
+000017eb <.L33>:
+    17eb:   b8 00 00 00 00          mov    $0x0,%eax
+    17f0:   05 b7 00 00 00          add    $0xb7,%eax
+    17f5:   8d b0 74 fc ff ff       lea    -0x38c(%eax),%esi
+    17fb:   e8 9d 08 00 00          call   209d <illegal_move>
+    
+    1800:   8d 86 74 fc ff ff       lea    -0x38c(%esi),%eax
+    1806:   3b 44 24 08             cmp    0x8(%esp),%eax
+    180a:   75 21                   jne    182d <.L30+0x7>
+
+    180c:   8b 44 24 0c             mov    0xc(%esp),%eax
+    1810:   65 33 05 14 00 00 00    xor    %gs:0x14,%eax
+    1817:   75 1b                   jne    1834 <.L30+0xe>
+    1819:   83 c4 14                add    $0x14,%esp
+    181c:   5b                      pop    %ebx
+    181d:   5e                      pop    %esi
+    181e:   c3                      ret
+
+0000181f <.L34>:
+    181f:   b8 00 00 00 00          mov    $0x0,%eax
+    1824:   eb cf                   jmp    17f5 <.L33+0xa>
+
+00001826 <.L30>:
+    1826:   be 00 00 00 00          mov    $0x0,%esi
+    182b:   eb ce                   jmp    17fb <.L33+0x10>
+    182d:   e8 6b 08 00 00          call   209d <illegal_move>
+    1832:   eb d8                   jmp    180c <.L33+0x21>
+    1834:   e8 27 18 00 00          call   3060 <__stack_chk_fail_local>
+
+
+    1 0x565567c6    0x565567c3
+    2 0x565567d0
+    3 0x556567da    0x565567d7
+    4 0x556567e4    
+    5 0x556567ee    0x565567eb
+    6 0x556567f8    0x565567eb
+    7 0x55656802    0x5655681f
